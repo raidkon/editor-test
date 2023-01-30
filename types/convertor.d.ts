@@ -1,4 +1,4 @@
-import { NodeType, MarkType, Schema, ProsemirrorNode, Mark } from 'prosemirror-model';
+import { NodeType, MarkType, Schema, Node as ProsemirrorNode, Mark } from 'prosemirror-model';
 import { MdNode, MdNodeType, RendererOptions, HTMLToken, MdPos } from './toastmark';
 import { WwNodeType, WwMarkType } from './wysiwyg';
 
@@ -45,8 +45,6 @@ export type FirstDelimFn = (index: number) => string;
 export interface ToMdConvertorState {
   stopNewline: boolean;
   inTable: boolean;
-  getDelim(): string;
-  setDelim(delim: string): void;
   flushClose(size?: number): void;
   wrapBlock(delim: string, firstDelim: string | null, node: ProsemirrorNode, fn: () => void): void;
   ensureNewLine(): void;
@@ -113,8 +111,7 @@ export type ToMdNodeTypeConvertorMap = Partial<Record<WwNodeType, ToMdNodeTypeCo
 
 type ToMdMarkTypeConvertor = (
   nodeInfo?: MarkInfo,
-  entering?: boolean,
-  betweenSpace?: boolean
+  entering?: boolean
 ) => ToMdConvertorReturnValues & ToMdMarkTypeOption;
 
 export type ToMdMarkTypeConvertorMap = Partial<Record<WwMarkType, ToMdMarkTypeConvertor>>;
@@ -127,8 +124,7 @@ interface ToMdConvertorContext {
 
 type ToMdConvertor = (
   nodeInfo: NodeInfo | MarkInfo,
-  context: ToMdConvertorContext,
-  betweenSpace?: boolean
+  context: ToMdConvertorContext
 ) => ToMdConvertorReturnValues;
 
 export type ToMdConvertorMap = Partial<Record<WwNodeType | MdNodeType, ToMdConvertor>>;
