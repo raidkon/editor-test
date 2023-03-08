@@ -86,6 +86,7 @@ export interface ViewerOptions {
   frontMatter?: boolean;
   usageStatistics?: boolean;
   theme?: string;
+  widgetRules?: WidgetRule[];
 }
 
 export class Viewer {

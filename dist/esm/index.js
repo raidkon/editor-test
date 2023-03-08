@@ -1,6 +1,6 @@
 /**
  * @toast-ui/editor
- * @version 3.2.1 | Fri Feb 17 2023
+ * @version 3.2.1 | Wed Mar 08 2023
  * @author NHN Cloud FE Development Lab <dl_javascript@nhn.com>
  * @license MIT
  */
@@ -14,7 +14,7 @@ import { deleteSelection, selectAll, baseKeymap, chainCommands, joinForward, new
 import { InputRule, inputRules, undoInputRule } from 'prosemirror-inputrules';
 import { undo, redo, history, undoDepth } from 'prosemirror-history';
 
-/*! *****************************************************************************
+/******************************************************************************
 Copyright (c) Microsoft Corporation.
 
 Permission to use, copy, modify, and/or distribute this software for any
@@ -4734,7 +4734,7 @@ function memorizeHandler(element, type, handler, wrappedHandler) {
 
 var on_1 = on;
 
-/*! *****************************************************************************
+/******************************************************************************
 Copyright (c) Microsoft Corporation.
 
 Permission to use, copy, modify, and/or distribute this software for any
@@ -21814,6 +21814,7 @@ var ToastUIEditorViewer = /** @class */ (function () {
             frontMatter: false,
             usageStatistics: true,
             theme: 'light',
+            widgetRules: [],
         }, options);
         this.eventEmitter = new EventEmitter();
         var linkAttributes = sanitizeLinkAttribute(this.options.linkAttributes);
@@ -21823,7 +21824,8 @@ var ToastUIEditorViewer = /** @class */ (function () {
             usageStatistics: this.options.usageStatistics,
             instance: this,
         }) || {}, toHTMLRenderers = _a.toHTMLRenderers, markdownParsers = _a.markdownParsers;
-        var _b = this.options, customHTMLRenderer = _b.customHTMLRenderer, extendedAutolinks = _b.extendedAutolinks, referenceDefinition = _b.referenceDefinition, frontMatter = _b.frontMatter, customHTMLSanitizer = _b.customHTMLSanitizer;
+        var _b = this.options, customHTMLRenderer = _b.customHTMLRenderer, extendedAutolinks = _b.extendedAutolinks, referenceDefinition = _b.referenceDefinition, frontMatter = _b.frontMatter, customHTMLSanitizer = _b.customHTMLSanitizer, widgetRules = _b.widgetRules;
+        setWidgetRules(widgetRules);
         var rendererOptions = {
             linkAttributes: linkAttributes,
             customHTMLRenderer: __assign$1(__assign$1({}, toHTMLRenderers), customHTMLRenderer),

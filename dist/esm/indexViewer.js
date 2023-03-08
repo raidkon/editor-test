@@ -1,6 +1,6 @@
 /**
  * @toast-ui/editor : viewer
- * @version 3.2.1 | Fri Feb 17 2023
+ * @version 3.2.1 | Wed Mar 08 2023
  * @author NHN Cloud FE Development Lab <dl_javascript@nhn.com>
  * @license MIT
  */
@@ -11,7 +11,7 @@ import { Decoration, DecorationSet } from 'prosemirror-view';
 import { keymap } from 'prosemirror-keymap';
 import { Fragment } from 'prosemirror-model';
 
-/*! *****************************************************************************
+/******************************************************************************
 Copyright (c) Microsoft Corporation.
 
 Permission to use, copy, modify, and/or distribute this software for any
@@ -47,7 +47,7 @@ function __spreadArray$1(to, from, pack) {
     return to.concat(ar || Array.prototype.slice.call(from));
 }
 
-/*! *****************************************************************************
+/******************************************************************************
 Copyright (c) Microsoft Corporation.
 
 Permission to use, copy, modify, and/or distribute this software for any
@@ -10102,6 +10102,7 @@ function getInlineMarkdownText(mdNode) {
     }
 }
 
+var widgetRules = [];
 var widgetRuleMap = {};
 var reWidgetPrefix = /\$\$widget\d+\s/;
 function unwrapWidgetSyntax(text) {
@@ -10121,6 +10122,12 @@ function widgetToDOM(info, text) {
         text = matches[0];
     }
     return toDOM(text);
+}
+function setWidgetRules(rules) {
+    widgetRules = rules;
+    widgetRules.forEach(function (rule, index) {
+        widgetRuleMap["widget" + index] = rule;
+    });
 }
 function getWidgetContent(widgetNode) {
     var event;
@@ -12645,6 +12652,7 @@ var ToastUIEditorViewer = /** @class */ (function () {
             frontMatter: false,
             usageStatistics: true,
             theme: 'light',
+            widgetRules: [],
         }, options);
         this.eventEmitter = new EventEmitter();
         var linkAttributes = sanitizeLinkAttribute(this.options.linkAttributes);
@@ -12654,7 +12662,8 @@ var ToastUIEditorViewer = /** @class */ (function () {
             usageStatistics: this.options.usageStatistics,
             instance: this,
         }) || {}, toHTMLRenderers = _a.toHTMLRenderers, markdownParsers = _a.markdownParsers;
-        var _b = this.options, customHTMLRenderer = _b.customHTMLRenderer, extendedAutolinks = _b.extendedAutolinks, referenceDefinition = _b.referenceDefinition, frontMatter = _b.frontMatter, customHTMLSanitizer = _b.customHTMLSanitizer;
+        var _b = this.options, customHTMLRenderer = _b.customHTMLRenderer, extendedAutolinks = _b.extendedAutolinks, referenceDefinition = _b.referenceDefinition, frontMatter = _b.frontMatter, customHTMLSanitizer = _b.customHTMLSanitizer, widgetRules = _b.widgetRules;
+        setWidgetRules(widgetRules);
         var rendererOptions = {
             linkAttributes: linkAttributes,
             customHTMLRenderer: __assign$1(__assign$1({}, toHTMLRenderers), customHTMLRenderer),
